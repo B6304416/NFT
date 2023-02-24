@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOROHEDORO</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+
+<body>
+  <h1 class="title">Tensei shitara slime datta ken</h1>
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <h2 id="character-name">Rimuru</h2>
+        <img src=".\src\images\Rimuru.jpg" class="mask" alt="Rimuru" />
+        <div id="price"><br>0.00035 GoerliETH</div>
+        <button id="btnBuy" onclick="btnBuy('Rimuru', 350000000000000)">Buy</button>
+
+      </div>
+      <div class="card">
+        <h2 id="character-name">Diablo</h2>
+        <img src=".\src\images\Diablo.jpg" alt="Diablo">
+        <div id="price"><br>0.00025 GoerliETH</div>
+        <button id="btnBuy" onclick="btnBuy('Diablo', 250000000000000)">Buy</button>
+      </div>
+      <div class="card">
+        <h2 id="character-name">Guy Crimson</h2>
+        <img src=".\src\images\Guy_Crimson.jpg" alt="Guy Crimson">
+        <div id="price"><br>0.00035 GoerliETH</div>
+        <button id="btnBuy" onclick="btnBuy('Guy Crimson', 350000000000000)">Buy</button>
+      </div>
+
+      <div class="card">
+        <h2 id="character-name">Luminus</h2>
+        <img src=".\src\images\Luminus_Valenti.jpg" alt="Luminus">
+        <div id="price"><br>0.000125 GoerliETH</div>
+        <button id="btnBuy" onclick="btnBuy('Luminus', 125000000000000)">Buy</button>
+      </div>
+
+      <div class="card">
+        <h2 id="character-name">Ultima</h2>
+        <img src=".\src\images\Ultima.jpg" alt="Ultima">
+        <div id="price">0.00020 GoerliETH</div>
+        <button id="btnBuy" onclick="btnBuy('Ultima', 200000000000000)">Buy</button>
+      </div>
+
+      <div class="card">
+        <h2 id="character-name">Veldora</h2>
+        <img src=".\src\images\Veldora.jpg" alt="Veldora">
+        <div id="price"><br>0.00035 GoerliETH</div>
+        <button id="btnBuy" onclick="btnBuy('Veldora', 350000000000000)">Buy</button>
+      </div>
+
+    </div>
+    <div class="container2">
+      <table width="100%" height="500">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Character</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="time1"></td>
+            <td id="character1"></td>
+            <td id="owner1"></td>
+          </tr>
+          <tr>
+            <td id="time2"></td>
+            <td id="character2"></td>
+            <td id="owner2"></td>
+          </tr>
+          <tr>
+            <td id="time3"></td>
+            <td id="character3"></td>
+            <td id="owner3"></td>
+          </tr>
+          <tr>
+            <td id="time4"></td>
+            <td id="character4"></td>
+            <td id="owner4"></td>
+          </tr>
+          <tr>
+            <td id="time5"></td>
+            <td id="character5"></td>
+            <td id="owner5"></td>
+          </tr>
+          <tr>
+            <td id="time6"></td>
+            <td id="character6"></td>
+            <td id="owner6"></td>
+          </tr>
+          <tr>
+            <td id="time7"></td>
+            <td id="character7"></td>
+            <td id="owner7"></td>
+          </tr>
+          <tr>
+            <td id="time8"></td>
+            <td id="character8"></td>
+            <td id="owner8"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+  <script>
+    async function loadWeb3() {
+      if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        ethereum
+          .request({ method: 'eth_requestAccounts' })
+          .then(handleAccountsChanged)
+          .catch((err) => {
+            if (err.code === 4001) {
+              console.log('Please connect to MetaMask.');
+            } else {
+              console.error(err);
+            }
+          });
+      }
+    }
+
+    let currentAccount = null;
+
+
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
+
+    function handleAccountsChanged(accounts) {
+      if (accounts.length === 0) {
+        console.log('Please connect to MetaMask.');
+      } else if (accounts[0] !== currentAccount) {
+        currentAccount = accounts[0];
+      }
+    }
+
+    let abi = [
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "character",
+            "type": "string"
+          }
+        ],
+        "name": "Add",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "character",
+            "type": "string"
+          }
+        ],
+        "name": "buy_character",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "reason",
+            "type": "string"
+          }
+        ],
+        "name": "BuyError",
+        "type": "event"
+      }
+    ];
+
+    async function loadContract() {
+      return await new web3.eth.Contract(abi, '0x260a923f9eD28fC24213B064196aA2743AFb759E');
+    }
+
+    async function load() {
+      await loadWeb3();
+      web3.contract = await loadContract();
+    }
+
+    var i = 0;
+
+    function btnBuy(name, eth) {
+      console.log(currentAccount);
+      web3.contract.methods
+        .buy_character(name)
+        .send({ from: currentAccount, value: eth }, function (error, result) {
+          $("#result").html(result);
+        });
+      web3.contract.once("Add", {}, function (error, event) {
+        if (!error) {
+          console.log(event);
+          var h = new Date().getHours();
+          var m = new Date().getMinutes();
+          $("#result").html(
+            "Name:" +
+            event.returnValues.character +
+            "<br/>time:" +
+            h +
+            ":" +
+            m +
+            "<br/>owner:" +
+            event.returnValues.owner
+          );
+          i++;
+          $("#time" + i).html(h + ":" + m);
+          $("#character" + i).html(event.returnValues.character);
+          $("#owner" + i).html(event.returnValues.owner);
+        }
+      });
+    }
+    load();
+  </script>
+</body>
+
+</html>
