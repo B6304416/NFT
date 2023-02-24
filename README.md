@@ -2,7 +2,7 @@
 
 Tensei shitara slime datta ken 
 
-##tensei shitara slime datta ken 
+## tensei shitara slime datta ken 
 
 ```
 B6304416 ณัฐพล จงเกษกรรม
