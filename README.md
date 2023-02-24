@@ -1,6 +1,6 @@
 # NFT 
 
-Tensei shitara slime datta ken 
+NFT shop simple
 
 ## tensei shitara slime datta ken 
 
