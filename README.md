@@ -1,4 +1,4 @@
-# NFT 
+# Slime
 
 NFT shop simple
 
