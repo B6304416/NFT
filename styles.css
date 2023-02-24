@@ -33,6 +33,11 @@ body {
   vertical-align: middle;
 }
 
+table,
+th,
+td {
+  border: 1px solid black;
+}
 
 .card {
   width: 300px;
@@ -116,8 +121,3 @@ button {
   
 }
 
-table,
-th,
-td {
-  border: 1px solid black;
-}
